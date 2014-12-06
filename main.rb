@@ -12,9 +12,10 @@ class Game < Gosu::Window
     @grid = Grid.new(self)
     @pig = Pig.new(self, 900, 300)
     @state = :running
+    @summon_counter = 0
 
     @lane1 = [ Enemy.new(self, 500, 500, -5) ]
-    @lane2 = [ Enemy.new(self, 500, 300, 5) ]
+    @lane2 = [ ]
   end
 
   def draw
@@ -29,6 +30,9 @@ class Game < Gosu::Window
   def update
     @lane1.each { |enemy| enemy.update }
     @lane2.each { |enemy| enemy.update }
+    @summon_counter += 1
+    summon_farmers
+
     pig_collided?
   end
 
@@ -37,6 +41,12 @@ class Game < Gosu::Window
       lane.each do |enemy|
         @state = :lost if enemy.bounds.intersects?(@pig.bounds)  
       end
+    end
+  end
+
+  def summon_farmers
+    if @summon_counter % 180 == 0
+      @lane2 << Enemy.new(self, 500, 500, -5)
     end
   end
 
