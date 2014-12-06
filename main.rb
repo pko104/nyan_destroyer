@@ -73,7 +73,6 @@ class Game < Gosu::Window
 
   def player_won?
     if @grid.home.bounds.intersects?(@pig.bounds)
-      @beep.play
       @state = :menu
       reset
     end
