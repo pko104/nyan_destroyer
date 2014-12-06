@@ -21,20 +21,12 @@ class Menu
     @bg_image.draw(@x, @y, 0)
     @title.draw(175, 25, 4)
     draw_top_white
-    # scolor, mcolor, fcolor = 0xffffffff, 0xffffffff, 0xffffffff
-    # hcolor = Gosu::Color::RED
-    #
-    # scolor = hcolor if @selection == 1
-    # draw_text_centered("Play Game", @menu_font, 75, scolor)
-    # mcolor = hcolor if @selection == 2
-    # draw_text_centered("Music: #{@music_value} ", @menu_font, 120, mcolor)
-    # fcolor = hcolor if @selection == 3
-    # draw_text_centered("SFX: #{@sfx_value} ", @menu_font, 165, fcolor)
-    # draw_text(620, 5, "Playing As: #{@window.name}", @control_font, 0xffffd700z)
-    #
-    draw_text(15, 465, "Controls:", @control_font, 0xffffd700)
-    draw_text(15, 485, "R - Reset at gameover", @control_font, 0xffffffff)
-    draw_text(15, 505, "A/W/S/D - Move Hog", @control_font, 0xffffffff)
+    draw_instructions_white
+
+    draw_text(800, 900, "Controls:", @control_font, 0xFF000000)
+    draw_text(800, 920, "R - Reset at gameover", @control_font, 0xFF000000)
+    draw_text(800, 940, "A/W/S/D - Move Hog", @control_font, 0xFF000000)
+    draw_text(800, 960, "Spacebar - restart", @control_font, 0xFF000000)
 
   end
 
@@ -55,6 +47,19 @@ class Menu
       end
       y += 50
       x = 0
+    end
+  end
+
+  def draw_instructions_white
+    x = 750
+    y = 880
+    while y < 1000
+      until x == 1000
+          draw_square(x,y, 0xffffffff)
+          x += 50
+      end
+      y += 50
+      x = 750
     end
   end
 

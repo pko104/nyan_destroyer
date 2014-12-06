@@ -45,7 +45,10 @@ class Game < Gosu::Window
   def pig_collided?
     [@lane1, @lane2].each do |lane|
       lane.each do |enemy|
-        @state = :menu if enemy.bounds.intersects?(@pig.bounds)
+       if enemy.bounds.intersects?(@pig.bounds)
+         @state = :menu
+         reset
+       end
       end
     end
   end
@@ -54,6 +57,17 @@ class Game < Gosu::Window
     if @summon_counter % 180 == 0
       @lane2 << Enemy.new(self, 1000, 500, -5)
     end
+  end
+
+  def reset
+    @pig = Pig.new(self, 500, 900)
+    @state = :menu
+    @summon_counter = 0
+
+    @menu = Menu.new(self, 0, 0)
+
+    @lane1 = [ Enemy.new(self, 1000, 500, -5) ]
+    @lane2 = [ Enemy.new(self, 0, 450, 5)]
   end
 
   def button_down(id)
