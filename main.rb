@@ -5,6 +5,13 @@ class Game < Gosu::Window
     super(1000, 1000, false)
   end
 
+  def draw
+
+  end
+
+  def update
+
+  end
 end
 
 Game.new.show
