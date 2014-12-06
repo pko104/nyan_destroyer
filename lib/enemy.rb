@@ -2,7 +2,8 @@ class Enemy
   attr_accessor :x, :y
 
   def initialize(window, x, y, speed)
-    @enemy_image = Gosu::Image.new(window, 'img/enemy.jpg')
+    random_enemy = [1,2,3,4].sample
+    @enemy_image = Gosu::Image.new(window, "img/enemy#{random_enemy}.png")
     @window = window
     @x = x
     @y = y
