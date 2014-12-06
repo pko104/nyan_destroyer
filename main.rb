@@ -8,6 +8,7 @@ class Game < Gosu::Window
   def initialize
     super(1000, 1000, false)
     @grid = Grid.new(self)
+    @pig = Pig.new(self, 100, 600)
   end
 
   def draw

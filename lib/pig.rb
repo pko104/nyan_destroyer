@@ -19,7 +19,7 @@ class Pig
   end
 
   def draw
-    @pig_image.draw(@x, @y, 0)
+    @pig_image.draw(@x, @y, 10)
   end
 
   def update
