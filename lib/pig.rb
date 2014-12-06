@@ -23,6 +23,6 @@ class Pig
   end
 
   def update
-  
+
   end
 end
