@@ -1,11 +1,12 @@
 class Grid
-  attr_reader :home
+  attr_reader :home, :beep
   def initialize(window)
     @window = window
     @grass_image = Gosu::Image.new(window, 'img/grass.jpg')
     @mud_image = Gosu::Image.new(window, 'img/mud.png')
     @tree_image = Gosu::Image.new(window, 'img/tree.jpg')
     @home = Home.new(window, 0, 0)
+    # @beep = Gosu::Sample.new(window, "sounds/beep-01a.wav")
   end
 
   def draw
