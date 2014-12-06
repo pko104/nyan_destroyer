@@ -14,7 +14,7 @@ class BoundingBox
     x >= left && x <= right && y >= bottom && y <= top
   end
 
-  # def intersects?(box)
-  #   self.right > box.left && self.bottom < box.top && self.left < box.right && self.top > box.bottom
-  # end
+  def intersects?(box)
+    self.right > box.left && self.bottom < box.top && self.left < box.right && self.top > box.bottom
+  end
 end
