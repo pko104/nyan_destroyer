@@ -3,6 +3,7 @@ require 'gosu'
 require_relative './lib/pig'
 require_relative './lib/enemy'
 require_relative './lib/bounding_box'
+require_relative './lib/home'
 
 require_relative 'grid'
 
@@ -34,12 +35,19 @@ class Game < Gosu::Window
     summon_farmers
 
     pig_collided?
+    player_won?
+  end
+
+  def player_won?
+    if @grid.home.bounds.intersects?(@pig.bounds)
+      @state = :menu
+    end
   end
 
   def pig_collided?
     [@lane1, @lane2].each do |lane|
       lane.each do |enemy|
-        @state = :lost if enemy.bounds.intersects?(@pig.bounds)  
+        @state = :lost if enemy.bounds.intersects?(@pig.bounds)
       end
     end
   end
@@ -89,4 +97,5 @@ class Game < Gosu::Window
   end
 
 end
+
 Game.new.show
