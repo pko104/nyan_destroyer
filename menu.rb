@@ -1,5 +1,6 @@
 class Menu
   attr_accessor :selection, :menu_action
+  attr_reader :lose_image
 
   def initialize(window, x, y)
     @window = window
@@ -11,23 +12,23 @@ class Menu
     @control_font = Gosu::Font.new(@window, "Futura", 600 / 30)
     @bg_image = Gosu::Image.new(window, 'img/menu/background.png')
     @title = Gosu::Image.new(window, 'img/menu/title_name_big.png')
-
+    @lose_image = Gosu::Image.new(window, 'img/creepy_eric2.png')
+    # @lose_image_text = Gosu::Image.new(window, 'bacon_full.jpg')
     # Logic
     @selection = 1
     @menu_action = nil
   end
 
   def draw
-    @bg_image.draw(@x, @y, 0)
-    @title.draw(175, 25, 4)
-    draw_top_white
-    draw_instructions_white
 
-    draw_text(800, 900, "Controls:", @control_font, 0xFF000000)
-    draw_text(800, 920, "R - Reset at gameover", @control_font, 0xFF000000)
-    draw_text(800, 940, "A/W/S/D - Move Hog", @control_font, 0xFF000000)
-    draw_text(800, 960, "Spacebar - restart", @control_font, 0xFF000000)
+      @bg_image.draw(@x, @y, 0)
+      @title.draw(175, 25, 4)
+      draw_top_white
+      draw_instructions_white
 
+      draw_text(800, 920, "Controls:", @control_font, 0xFF000000)
+      draw_text(800, 940, "A/W/S/D - Move Hog", @control_font, 0xFF000000)
+      draw_text(800, 960, "Spacebar - start", @control_font, 0xFF000000)
   end
 
   def draw_square(top_left_x, top_left_y, color)
