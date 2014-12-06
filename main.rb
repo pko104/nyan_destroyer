@@ -3,23 +3,29 @@ require 'gosu'
 require_relative './lib/pig'
 require_relative './lib/enemy'
 require_relative './lib/bounding_box'
+require_relative 'menu'
 require_relative './lib/home'
-
 require_relative 'grid'
 
 class Game < Gosu::Window
   def initialize
     super(1000, 1000, false)
     @grid = Grid.new(self)
-    @pig = Pig.new(self, 900, 300)
-    @state = :running
+    @pig = Pig.new(self, 500, 900)
+    @state = :menu
     @summon_counter = 0
 
-    @lane1 = [ Enemy.new(self, 500, 500, -5) ]
-    @lane2 = [ ]
+    @menu = Menu.new(self, 0, 0)
+
+    @lane1 = [ Enemy.new(self, 1000, 500, -5) ]
+    @lane2 = [ Enemy.new(self, 0, 450, 5)]
   end
 
   def draw
+    if @state == :menu
+      @menu.draw
+    end
+
     if @state == :running
       @grid.draw
       @pig.draw
@@ -47,15 +53,29 @@ class Game < Gosu::Window
   def pig_collided?
     [@lane1, @lane2].each do |lane|
       lane.each do |enemy|
-        @state = :lost if enemy.bounds.intersects?(@pig.bounds)
+       if enemy.bounds.intersects?(@pig.bounds)
+         @state = :menu
+         reset
+       end
       end
     end
   end
 
   def summon_farmers
     if @summon_counter % 180 == 0
-      @lane2 << Enemy.new(self, 500, 500, -5)
+      @lane2 << Enemy.new(self, 1000, 500, -5)
     end
+  end
+
+  def reset
+    @pig = Pig.new(self, 500, 900)
+    @state = :menu
+    @summon_counter = 0
+
+    @menu = Menu.new(self, 0, 0)
+
+    @lane1 = [ Enemy.new(self, 1000, 500, -5) ]
+    @lane2 = [ Enemy.new(self, 0, 450, 5)]
   end
 
   def button_down(id)
@@ -79,23 +99,11 @@ class Game < Gosu::Window
         @pig.x += @pig.pig_speed
       end
     end
-  end
+    if id == Gosu::KbSpace
+      @state = :running
+    end
 
-  def button_up(id)
-    if id == Gosu::KbW
-      @pig.move_up = false
-    end
-    if id == Gosu::KbS
-      @pig.move_down = false
-    end
-    if id == Gosu::KbA
-      @pig.move_left = false
-    end
-    if id == Gosu::KbD
-      @pig.move_right = false
-    end
   end
-
 end
 
 Game.new.show

@@ -18,6 +18,6 @@ class Enemy
   end
 
   def bounds
-    BoundingBox.new(@x, @y, 150, 196)
+    BoundingBox.new(@x, @y, 50, 50)
   end
 end

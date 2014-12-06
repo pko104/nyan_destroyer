@@ -8,10 +8,6 @@ class Pig
 
     @pig_speed = 50
 
-    @move_up = false
-    @move_down = false
-    @move_right = false
-    @move_left = false
   end
 
   def bounds
