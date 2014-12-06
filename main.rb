@@ -3,7 +3,8 @@ require 'gosu'
 require_relative './lib/pig'
 require_relative './lib/enemy'
 require_relative './lib/bounding_box'
-
+require_relative 'menu'
+require_relative './lib/home'
 require_relative 'grid'
 
 class Game < Gosu::Window
@@ -11,8 +12,10 @@ class Game < Gosu::Window
     super(1000, 1000, false)
     @grid = Grid.new(self)
     @pig = Pig.new(self, 500, 950)
-    @state = :running
+    @state = :menu
     @summon_counter = 0
+    @menu = Menu.new(self, 0, 0)
+
 
     @lane1 = [ ]
     @lane2 = [ ]
@@ -25,6 +28,10 @@ class Game < Gosu::Window
   end
 
   def draw
+    if @state == :menu
+      @menu.draw
+    end
+
     if @state == :running
       @grid.draw
       @pig.draw
@@ -52,12 +59,22 @@ class Game < Gosu::Window
     summon_farmers
 
     pig_collided?
+    player_won?
+  end
+
+  def player_won?
+    if @grid.home.bounds.intersects?(@pig.bounds)
+      @state = :menu
+    end
   end
 
   def pig_collided?
     [@lane1, @lane2, @lane3, @lane4, @lane5, @lane6, @lane7, @lane8].each do |lane|
       lane.each do |enemy|
-        @state = :lost if enemy.bounds.intersects?(@pig.bounds)
+       if enemy.bounds.intersects?(@pig.bounds)
+         @state = :menu
+         reset
+       end
       end
     end
   end
@@ -72,7 +89,7 @@ class Game < Gosu::Window
     elsif (@summon_counter % 210 == 0) || (@summon_counter % 100 == 0)
       @lane1 << Enemy.new(self, 50, 750, 7)
     end
-    
+
     if (@summon_counter % 60 == 0) || (@summon_counter % 120 == 0)
       @lane5 << Enemy.new(self, 50, 350, 10)
     end
@@ -88,6 +105,17 @@ class Game < Gosu::Window
     if (@summon_counter % 60 == 0) || (@summon_counter % 120 == 0)
       @lane8 << Enemy.new(self, 950, 400, -8)
     end
+  end
+
+  def reset
+    @pig = Pig.new(self, 500, 900)
+    @state = :menu
+    @summon_counter = 0
+
+    @menu = Menu.new(self, 0, 0)
+
+    @lane1 = [ Enemy.new(self, 1000, 500, -5) ]
+    @lane2 = [ Enemy.new(self, 0, 450, 5)]
   end
 
   def button_down(id)
@@ -111,22 +139,11 @@ class Game < Gosu::Window
         @pig.x += @pig.pig_speed
       end
     end
-  end
+    if id == Gosu::KbSpace
+      @state = :running
+    end
 
-  def button_up(id)
-    if id == Gosu::KbW
-      @pig.move_up = false
-    end
-    if id == Gosu::KbS
-      @pig.move_down = false
-    end
-    if id == Gosu::KbA
-      @pig.move_left = false
-    end
-    if id == Gosu::KbD
-      @pig.move_right = false
-    end
   end
-
 end
+
 Game.new.show
