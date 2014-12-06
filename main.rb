@@ -6,7 +6,7 @@ class Game < Gosu::Window
   end
 
   def draw
-
+      put "test"
   end
 
   def update
