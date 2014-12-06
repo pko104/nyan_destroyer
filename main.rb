@@ -1,15 +1,17 @@
+require 'pry'
 require 'gosu'
 require_relative './lib/pig'
+
+require_relative 'grid'
 
 class Game < Gosu::Window
   def initialize
     super(1000, 1000, false)
-
-    # pig starting location
-    @pig = Pig.new(self, 100, 600)
+    @grid = Grid.new(self)
   end
 
   def draw
+    @grid.draw
     @pig.draw
   end
 
@@ -17,5 +19,4 @@ class Game < Gosu::Window
 
   end
 end
-
 Game.new.show
