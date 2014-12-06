@@ -4,6 +4,7 @@ require_relative './lib/pig'
 require_relative './lib/enemy'
 require_relative './lib/bounding_box'
 require_relative 'menu'
+require_relative './lib/home'
 require_relative 'grid'
 
 class Game < Gosu::Window
@@ -40,6 +41,13 @@ class Game < Gosu::Window
     summon_farmers
 
     pig_collided?
+    player_won?
+  end
+
+  def player_won?
+    if @grid.home.bounds.intersects?(@pig.bounds)
+      @state = :menu
+    end
   end
 
   def pig_collided?
