@@ -8,6 +8,7 @@ require_relative './lib/home'
 require_relative 'grid'
 
 class Game < Gosu::Window
+  attr_reader :state
   def initialize
     super(1000, 1000, false)
     @grid = Grid.new(self)
@@ -15,6 +16,9 @@ class Game < Gosu::Window
     @state = :menu
     @summon_counter = 0
     @menu = Menu.new(self, 0, 0)
+    @large_font = Gosu::Font.new(self, 'futura', 100)
+    @small_font = Gosu::Font.new(self, 'futura', 40)
+
 
 
     @lane1 = [ ]
@@ -50,7 +54,17 @@ class Game < Gosu::Window
       @lane10.each { |enemy| enemy.draw }
       @lane11.each { |enemy| enemy.draw }
     end
+
+    if @state == :lost
+      # t = Time.now + 10
+      #   while Time.now < t
+      @menu.lose_image.draw(650, 220, 0)
+      @menu.draw_text(275, 0, "Sorry, I win...", @large_font, 0xffffffff)
+      @menu.draw_text(300, 125, "Press Enter to play again!", @small_font, 0xffffffff)
+
+    end
   end
+
 
   def update
     @lane1.each { |enemy| enemy.update }
@@ -82,8 +96,7 @@ class Game < Gosu::Window
     [@lane1, @lane2, @lane3, @lane4, @lane5, @lane6, @lane7, @lane8, @lane9, @lane10, @lane11].each do |lane|
       lane.each do |enemy|
        if enemy.bounds.intersects?(@pig.bounds)
-         @state = :menu
-         reset
+         @state = :lost
        end
       end
     end
@@ -129,9 +142,14 @@ class Game < Gosu::Window
     end
   end
 
+  def lose_screen
+    @state = :lose
+  end
+
   def reset
-    @pig = Pig.new(self, 500, 900)
     @state = :menu
+    @grid = Grid.new(self)
+    @pig = Pig.new(self, 500, 900)
     @summon_counter = 0
 
     @menu = Menu.new(self, 0, 0)
@@ -164,6 +182,12 @@ class Game < Gosu::Window
     if id == Gosu::KbSpace
       @state = :running
     end
+
+
+      if id == Gosu::KbReturn
+      @state = :menu
+      reset
+      end
 
   end
 end
