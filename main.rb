@@ -29,6 +29,9 @@ class Game < Gosu::Window
     @lane6 = [ ]
     @lane7 = [ ]
     @lane8 = [ ]
+    @lane9 = [ ]
+    @lane10 = [ ]
+    @lane11 = [ ]
   end
 
   def draw
@@ -47,6 +50,9 @@ class Game < Gosu::Window
       @lane6.each { |enemy| enemy.draw }
       @lane7.each { |enemy| enemy.draw }
       @lane8.each { |enemy| enemy.draw }
+      @lane9.each { |enemy| enemy.draw }
+      @lane10.each { |enemy| enemy.draw }
+      @lane11.each { |enemy| enemy.draw }
     end
 
     if @state == :lost
@@ -69,6 +75,9 @@ class Game < Gosu::Window
     @lane6.each { |enemy| enemy.update }
     @lane7.each { |enemy| enemy.update }
     @lane8.each { |enemy| enemy.update }
+    @lane9.each { |enemy| enemy.update }
+    @lane10.each { |enemy| enemy.update }
+    @lane11.each { |enemy| enemy.update }
     @summon_counter += 1
     summon_farmers
 
@@ -84,7 +93,7 @@ class Game < Gosu::Window
   end
 
   def pig_collided?
-    [@lane1, @lane2, @lane3, @lane4, @lane5, @lane6, @lane7, @lane8].each do |lane|
+    [@lane1, @lane2, @lane3, @lane4, @lane5, @lane6, @lane7, @lane8, @lane9, @lane10, @lane11].each do |lane|
       lane.each do |enemy|
        if enemy.bounds.intersects?(@pig.bounds)
          @state = :lost
@@ -94,30 +103,42 @@ class Game < Gosu::Window
   end
 
   def summon_farmers
-    if (@summon_counter % 180 == 0) || (@summon_counter % 190 == 0)
-      @lane2 << Enemy.new(self, 950, 700, -5)
-    elsif (@summon_counter % 120 == 0) || (@summon_counter % 180 == 0)
-      @lane3 << Enemy.new(self, 50, 650, 7)
-    elsif (@summon_counter % 110 == 0) || (@summon_counter % 180 == 0)
-      @lane4 << Enemy.new(self, 950, 600, -5)
-    elsif (@summon_counter % 210 == 0) || (@summon_counter % 100 == 0)
-      @lane1 << Enemy.new(self, 50, 750, 7)
+    if (@summon_counter % 180 == 0) || (@summon_counter % 60 == 0)
+      @lane2 << Enemy.new(self, 950, 700, -6)
+    elsif (@summon_counter % 120 == 0) || (@summon_counter % 80 == 0)
+      @lane3 << Enemy.new(self, 50, 650, 8)
+    elsif (@summon_counter % 110 == 0) || (@summon_counter % 75 == 0)
+      @lane4 << Enemy.new(self, 950, 600, -6)
+    elsif (@summon_counter % 90 == 0) || (@summon_counter % 60 == 0)
+      @lane1 << Enemy.new(self, 50, 750, 8)
     end
 
     if (@summon_counter % 60 == 0) || (@summon_counter % 120 == 0)
       @lane5 << Enemy.new(self, 50, 350, 10)
     end
 
-    if (@summon_counter % 120 == 0)
-      @lane6 << Enemy.new(self, 950, 500, -5)
+    if (@summon_counter % 120 == 0) || (@summon_counter % 80 == 0)
+      @lane6 << Enemy.new(self, 950, 500, -7)
     end
 
     if (@summon_counter % 60 == 0) || (@summon_counter % 120 == 0)
-      @lane7 << Enemy.new(self, 50, 450, 8)
+      @lane7 << Enemy.new(self, 50, 450, 9)
     end
 
     if (@summon_counter % 60 == 0) || (@summon_counter % 120 == 0)
-      @lane8 << Enemy.new(self, 950, 400, -8)
+      @lane8 << Enemy.new(self, 950, 300, -8)
+    end
+
+    if (@summon_counter % 40 == 0) || (@summon_counter % 80 == 0)
+      @lane9 << Enemy.new(self, 950, 250, -12)
+    end
+
+    if (@summon_counter % 60 == 0) || (@summon_counter % 30 == 0)
+      @lane10 << Enemy.new(self, 50, 200, 14)
+    end
+
+    if (@summon_counter % 30 == 0) || (@summon_counter % 80 == 0)
+      @lane11 << Enemy.new(self, 50, 400, 11)
     end
   end
 
@@ -138,22 +159,22 @@ class Game < Gosu::Window
   end
 
   def button_down(id)
-    if id == Gosu::KbW
+    if id == Gosu::KbUp
       unless @pig.y <= 0
         @pig.y -= @pig.pig_speed
       end
     end
-    if id == Gosu::KbS
+    if id == Gosu::KbDown
       unless @pig.y >= (1000 - @pig.pig_image.height)
         @pig.y += @pig.pig_speed
       end
     end
-    if id == Gosu::KbA
+    if id == Gosu::KbLeft
       unless @pig.x <= 0
         @pig.x -= @pig.pig_speed
       end
     end
-    if id == Gosu::KbD
+    if id == Gosu::KbRight
       unless @pig.x >= (1000 - @pig.pig_image.width)
         @pig.x += @pig.pig_speed
       end

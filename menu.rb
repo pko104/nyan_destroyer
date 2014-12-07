@@ -20,15 +20,13 @@ class Menu
   end
 
   def draw
-
-      @bg_image.draw(@x, @y, 0)
-      @title.draw(175, 25, 4)
-      draw_top_white
-      draw_instructions_white
-
-      draw_text(800, 920, "Controls:", @control_font, 0xFF000000)
-      draw_text(800, 940, "A/W/S/D - Move Hog", @control_font, 0xFF000000)
-      draw_text(800, 960, "Spacebar - start", @control_font, 0xFF000000)
+    @bg_image.draw(@x, @y, 0)
+    @title.draw(175, 25, 4)
+    draw_top_white
+    draw_instructions_white
+    draw_text(800, 920, "Controls:", @control_font, 0xFF000000)
+    draw_text(800, 940, "Arrows - Move Hog", @control_font, 0xFF000000)
+    draw_text(800, 960, "Spacebar - Start", @control_font, 0xFF000000)
   end
 
   def draw_square(top_left_x, top_left_y, color)
@@ -53,7 +51,7 @@ class Menu
 
   def draw_instructions_white
     x = 750
-    y = 880
+    y = 900
     while y < 1000
       until x == 1000
           draw_square(x,y, 0xffffffff)
