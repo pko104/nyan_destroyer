@@ -1,0 +1,12 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    devil (0.1.9.5)
+    gosu (0.8.6)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  devil
+  gosu

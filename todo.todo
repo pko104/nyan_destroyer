@@ -1,0 +1,35 @@
+TODO
+- Ruby gems for power ups
+- Diablo Ruby gems for image
+- Different bullet objects
+- Random enemy movement
+- Different intelligence on enemies
+- Player health
+- Player lives
+- Player higher score
+
+
+
+- Fix border for new ruby image
+
+
+David King
+- Bullets not going through
+- Bullet hit % metrics ***
+- Protecting super diamond mode
+- Astroid mode
+
+
+Philisophy, make bad guys the challenge not the controls. Make UX as easy as possible and make the bad guys be the hardest part. More badguys.  Suicide bomber bad guys that just explode if they get close enough to you. Ninja that go straight for your neck super fast once they spawn (ninjas need to charge, and then they attack at a certain point, you can't kill them because their invincible)
+
+
+- Spray shot upgrade
+- Sinatra hat safety upgrade
+- Lazer bullets for a give amount of time.
+- Flamethrower
+
+
+Refactoring:
+- Create a music player class that abstracts out music/sfx from all other classes
+- Add more enemy types/make enemies have inheritable traits so it's easier to make more kinds
+- Add particles to bullets/player moving

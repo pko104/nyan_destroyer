@@ -1,19 +1,20 @@
 class Menu
-  attr_accessor :selection, :menu_action
-  attr_reader :lose_image
+  attr_accessor :selection, :music, :sfx, :menu_action, :select_sound
 
-  def initialize(window, x, y)
+  def initialize(window, x, y, music, sfx)
     @window = window
     @y = y
     @x = x
+    @music = music
+    @sfx = sfx
 
     # Assets
     @menu_font = Gosu::Font.new(@window, "Futura", 600 / 15)
     @control_font = Gosu::Font.new(@window, "Futura", 600 / 30)
-    @bg_image = Gosu::Image.new(window, 'img/menu/background.png')
-    @title = Gosu::Image.new(window, 'img/menu/title_name_big.png')
-    @lose_image = Gosu::Image.new(window, 'img/creepy_eric2.png')
-    # @lose_image_text = Gosu::Image.new(window, 'bacon_full.jpg')
+    @select_sound = Gosu::Sample.new(@window, 'music/menuselect.ogg')
+    @bg_image = Gosu::Image.new(window, 'img/menu/menu_background.png')
+    @title = Gosu::Image.new(window, 'img/title.png')
+
     # Logic
     @selection = 1
     @menu_action = nil
@@ -21,45 +22,38 @@ class Menu
 
   def draw
     @bg_image.draw(@x, @y, 0)
-    @title.draw(175, 25, 4)
-    draw_top_white
-    draw_instructions_white
-    draw_text(800, 920, "Controls:", @control_font, 0xFF000000)
-    draw_text(800, 940, "Arrows - Move Hog", @control_font, 0xFF000000)
-    draw_text(800, 960, "Spacebar - Start", @control_font, 0xFF000000)
-  end
+    @title.draw(150, -50, 0)
 
-  def draw_square(top_left_x, top_left_y, color)
-    x = top_left_x
-    y = top_left_y
-    c = color
-    @window.draw_quad(x, y, c, x + 50, y, c, x + 50, y + 50, c, x, y + 50, c, 1)
-  end
+    # Toggle Music/SFX
+    @window.music == true ? @music_value = "ON" : @music_value = "OFF"
+    @window.sfx == true ? @sfx_value = "ON" : @sfx_value = "OFF"
 
-  def draw_top_white
-    x = 0
-    y = 0
-    while y < 200
-      until x == 1000
-        draw_square(x,y, 0xffffffff)
-        x += 50
-      end
-      y += 50
-      x = 0
-    end
-  end
+    # Menu Controls
+    scolor, mcolor, fcolor = 0xffffffff, 0xffffffff, 0xffffffff
+    hcolor = Gosu::Color::RED
 
-  def draw_instructions_white
-    x = 750
-    y = 900
-    while y < 1000
-      until x == 1000
-          draw_square(x,y, 0xffffffff)
-          x += 50
-      end
-      y += 50
-      x = 750
-    end
+    scolor = hcolor if @selection == 1
+    draw_text_centered("Play Game", @menu_font, 250, scolor)
+    mcolor = hcolor if @selection == 2
+    draw_text_centered("Music: #{@music_value} ", @menu_font, 300, mcolor)
+    fcolor = hcolor if @selection == 3
+    draw_text_centered("SFX: #{@sfx_value} ", @menu_font, 350, fcolor)
+
+
+    # Player Controls
+    draw_text(15, 620, "Controls:", @control_font, 0xffffffff)
+    draw_text(15, 640, "R - Reset at gameover", @control_font, 0xffffffff)
+    draw_text(15, 660, "Up/Down/Left/Righ - Move Player", @control_font, 0xffffffff)
+    draw_text(15, 680, " - Shoot", @control_font, 0xffffffff)
+    draw_text(15, 700, "Spacebar - Use Help Request", @control_font, 0xffffffff)
+    draw_text(15, 720, "P - Activate Pry", @control_font, 0xffffffff)
+
+    # Credits
+    draw_text(850, 700, "Borrowed from Spencer Dixon ", @control_font, 0xffffffff )
+    draw_text(875, 720, "Updated by Peter Ko", @control_font, 0xffffffff )
+
+    # Highscore
+   # draw_text(280, 565, "High Scores: rubywars.herokuapp.com ", @control_font, 0xffffffff )
   end
 
   def update
@@ -67,8 +61,8 @@ class Menu
   end
 
   def draw_text_centered(text, font, y_adjust, c)
-    x = (800 - font.text_width(text)) / 2
-    y = (600 - font.height) / 2
+    x = (1080 - font.text_width(text)) / 2
+    y = (720 - font.height) / 2
     y += y_adjust
     color = c
     draw_text(x, y, text, font, color)
