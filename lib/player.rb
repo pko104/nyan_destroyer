@@ -43,7 +43,10 @@ class Player
 
     bullet_speed = 10 + speed_boost
     @shooting.play(0.1) if @window.sfx
+
     Bullet.new(@window, x, y, x_speed, y_speed, bullet_speed)
+
+
   end
 
   def update

@@ -1,12 +1,11 @@
-class Enemy
+class ColumnAttack
 
   attr_reader :x, :y, :player, :speed, :death
   attr_accessor :state
 
   def initialize(window, x, y, player)
 
-    @enemy_image = Gosu::Image.new(window, 'img/cat.gif')
-   # @image = Devil::Image.new(window, 'img/cat.gif')
+    @enemy_image = Gosu::Image.new(window, 'img/colosuss.png')
     #@print = @image.to_blob
 
     #@enemy_image = Gosu::Image::load_tiles(self, "img/cat.gif", 25, 25, false)
@@ -15,7 +14,7 @@ class Enemy
     @x = x
     @y = y
     @state = :attack
-    @speed = 6
+    @speed = 12
     @bounce = false
 
     @death = Gosu::Sample.new(@window, 'music/Shot 4.wav')
@@ -30,9 +29,6 @@ class Enemy
 
   end
 
-  def charge
-    @enemy_image2.draw(@x, @y, 1)
-  end
 
   def update
     unless @state == :pause
@@ -48,7 +44,7 @@ class Enemy
         vel_y = (dy / distance) * speed
 
         @x += vel_x
-        @y += vel_y
+        @y = vel_y
       else
         @x += speed
         @y += -speed

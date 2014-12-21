@@ -40,7 +40,7 @@ module Keys
       if id == Gosu::KbRight
         @player.move_right = true
       end
-      if id == Gosu::KbSpace
+      if id == Gosu::KbR
         if @player.bombs >= 1
           @player.bombs -= 1
           @player.help_request_sfx.play if @sfx
@@ -61,7 +61,7 @@ module Keys
 
       # Bullets
       case
-      when id == Gosu::KbZ
+      when id == Gosu::KbSpace
         if @player.bullet_speed_boost > 0
           @bullets << @player.fire(:left, @player.bullet_speed_boost)
         else
@@ -92,5 +92,6 @@ module Keys
     if id == Gosu::KbRight
       @player.move_right = false
     end
+
   end
 end

@@ -2,7 +2,7 @@ require 'pry'
 require 'gosu'
 require 'uri'
 require 'net/http'
-require 'devil'
+#require 'devil'
 
 require_relative 'lib/bounding_box'
 require_relative 'lib/player'
@@ -12,6 +12,7 @@ require_relative 'lib/background'
 require_relative 'lib/bullet'
 require_relative 'lib/charge'
 require_relative 'lib/timer'
+require_relative 'lib/columnattack'
 require_relative 'lib/power_ups/speed'
 require_relative 'lib/power_ups/bombs'
 require_relative 'lib/power_ups/binding_pry'
@@ -48,6 +49,7 @@ class GameWindow < Gosu::Window
     @enemies = []
     @bullets = []
     @special_enemies =[]
+ #   @column_enemies = []
 
     # Game & Player Mechanics
     @name = NAME
@@ -84,6 +86,7 @@ class GameWindow < Gosu::Window
         @enemies.each {|e| e.draw} if !@enemies.empty?
         @bullets.each {|b| b.draw} if !@bullets.empty?
         @special_enemies.each {|s| s.draw} if !@special_enemies.empty?
+      #  @column_enemies.each {|s| s.update} if !@column_enemies.empty?
         @p_up_counter += 1
 
         #Drop Power Ups
@@ -141,9 +144,12 @@ class GameWindow < Gosu::Window
       @timer.update
       @enemies.each {|e| e.update}
       @special_enemies.each {|s| s.update}
+ #     @column_enemies.each {|c| c.update}
       @bullets.each {|b| b.update} if !@bullets.empty?
 
       summon_enemies
+
+  #    column_collision?
       spenemy_collision?
       enemy_collision?
       bullet_collision?
@@ -181,6 +187,7 @@ class GameWindow < Gosu::Window
       if @counter_spawn >= (@spawn_rate * 60.0)
        # 2.times { @enemies << spawn }
         @special_enemies << colossus
+
         @counter_spawn = 0
       end
       if @counter_rate >= (@spawn_acc * 60.0)
@@ -190,7 +197,7 @@ class GameWindow < Gosu::Window
     when timer.seconds >= 0
       if @counter_spawn >= (@spawn_rate * 60.0)
         @enemies << spawn
-
+     #   @column_enemies << columns
         @counter_spawn = 0
       end
       if @counter_rate >= (@spawn_acc * 60.0)
@@ -219,6 +226,10 @@ class GameWindow < Gosu::Window
   def e_bot_right
     Enemy.new(self, (rand(100) + 980), (rand(100) + 620), @player)
   end
+
+ # def columns
+ #   ColumnAttack.new(self, (rand(100..980)), (700), @player)
+ # end
 
   def colossus
     Charge.new(self, (rand(100) + 980), (rand(100..620)), @player)
@@ -258,6 +269,16 @@ class GameWindow < Gosu::Window
        end
      end
    end
+
+   # def column_collision?
+   #   @column_enemies.any? do |column|
+   #     if column.bounds.intersects?(@player.bounds)
+   #      @state = :lose
+   #     elsif column.bounce
+   #       @column_enemies.delete(column)
+   #     end
+   #   end
+   # end
 
   def bullet_collision?
     unless @bullets.empty?
@@ -312,6 +333,8 @@ class GameWindow < Gosu::Window
     @enemies = []
     @bullets = []
     @current_boost = []
+    @column_enemies = []
+    @special_enemies = []
     @score = 0
     @state = state
     @dropped_power_up = nil

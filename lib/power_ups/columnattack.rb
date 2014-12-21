@@ -1,4 +1,4 @@
-class Enemy
+class ColumnAttack
 
   attr_reader :x, :y, :player, :speed, :death
   attr_accessor :state
@@ -6,7 +6,7 @@ class Enemy
   def initialize(window, x, y, player)
 
     @enemy_image = Gosu::Image.new(window, 'img/cat.gif')
-   # @image = Devil::Image.new(window, 'img/cat.gif')
+    @image = Devil::Image.new(window, 'img/cat.gif')
     #@print = @image.to_blob
 
     #@enemy_image = Gosu::Image::load_tiles(self, "img/cat.gif", 25, 25, false)
