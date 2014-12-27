@@ -5,6 +5,7 @@ class ColumnAttack
 
   def initialize(window, x, y, player)
 
+
     @enemy_image = Gosu::Image.new(window, 'img/colosuss.png')
     #@print = @image.to_blob
 
