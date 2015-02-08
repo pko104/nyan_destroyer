@@ -72,7 +72,7 @@ module Keys
     # Menu
 
     if @state == :lose
-      if id == Gosu::KbR
+      if id == Gosu::KbReturn
         reset(:menu)
       end
     end

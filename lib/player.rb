@@ -19,8 +19,8 @@ class Player
     @move_left = false
 
     @shooting = Gosu::Sample.new(window, 'music/Shooting1 2.m4a')
-    @help_request_sfx = Gosu::Sample.new(window, 'music/Help_Request.wav')
-    @pry_sfx = Gosu::Sample.new(window, 'music/binding_pry.mp3')
+   # @help_request_sfx = Gosu::Sample.new(window, 'music/Help_Request.wav')
+   # @pry_sfx = Gosu::Sample.new(window, 'music/binding_pry.mp3')
 
   end
 

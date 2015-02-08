@@ -2,7 +2,6 @@ require 'pry'
 require 'gosu'
 require 'uri'
 require 'net/http'
-#require 'devil'
 
 
 require_relative 'lib/bounding_box'
@@ -37,8 +36,8 @@ class GameWindow < Gosu::Window
     @player = Player.new(self, 0, 360)
 
     #Power Ups
-    @power_ups = summon_power_ups
-    @dropped_power_up = @power_ups.select {|o| o.unused? == true}.first
+   # @power_ups = summon_power_ups
+    #@dropped_power_up = @power_ups.select {|o| o.unused? == true}.first
     @current_boost = []
     @pwr_up_frequency = 25 * 60
     @pwr_up_spawn_time = 5 * 60
@@ -91,13 +90,13 @@ class GameWindow < Gosu::Window
         @p_up_counter += 1
 
         #Drop Power Ups
-        if @p_up_counter >= @pwr_up_frequency && @p_up_counter <= @pwr_up_frequency  + @pwr_up_spawn_time
-          @dropped_power_up.draw if !@dropped_power_up.nil?
-          if @p_up_counter == @pwr_up_frequency + @pwr_up_spawn_time
-            @p_up_counter = 0
-            @dropped_power_up = @power_ups.select {|o| o.unused? == true}.first
-          end
-        end
+        # if @p_up_counter >= @pwr_up_frequency && @p_up_counter <= @pwr_up_frequency  + @pwr_up_spawn_time
+        #   @dropped_power_up.draw if !@dropped_power_up.nil?
+        #   if @p_up_counter == @pwr_up_frequency + @pwr_up_spawn_time
+        #     @p_up_counter = 0
+        #     @dropped_power_up = @power_ups.select {|o| o.unused? == true}.first
+        #   end
+        # end
 
         draw_text((SCREEN_WIDTH - @large_font.text_width("#{@score}") + 25) / 2, 10,"#{@score}", @medium_font, Gosu::Color::YELLOW)
         draw_text(1000, 54,"#{@timer.seconds}", @small_font, Gosu::Color::RED)
@@ -240,20 +239,20 @@ class GameWindow < Gosu::Window
     [e_bot_right, e_mid_bot_right, e_mid_right, e_mid_top_right, e_top_right].sample
   end
 
-  def summon_power_ups
-    power_ups = []
-    5.times do
-      power_ups << SpeedBoost.new(self, rand(700), rand(500))
-    end
-    10.times do
-      power_ups << PryBoost.new(self, rand(700), rand(500))
-    end
-    10.times do
-      power_ups << BombBoost.new(self, rand(700), rand(500))
-    end
-    power_ups.shuffle!
-    return power_ups
-  end
+  # def summon_power_ups
+  #   power_ups = []
+  #   5.times do
+  #     power_ups << SpeedBoost.new(self, rand(700), rand(500))
+  #   end
+  #   10.times do
+  #     power_ups << PryBoost.new(self, rand(700), rand(500))
+  #   end
+  #   10.times do
+  #     power_ups << BombBoost.new(self, rand(700), rand(500))
+  #   end
+  #   power_ups.shuffle!
+  #   return power_ups
+  # end
 
   def enemy_collision?
     @enemies.any? do |enemy|
@@ -330,7 +329,7 @@ class GameWindow < Gosu::Window
     @menu = Menu.new(self, 0, 0, @music, @sfx)
     @player = Player.new(self, 0, 360)
     @timer = Timer.new
-    @power_ups = summon_power_ups
+  #  @power_ups = summon_power_ups
     @enemies = []
     @bullets = []
     @current_boost = []

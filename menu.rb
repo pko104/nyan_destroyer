@@ -42,15 +42,15 @@ class Menu
 
     # Player Controls
     draw_text(15, 620, "Controls:", @control_font, 0xffffffff)
-    draw_text(15, 640, "R - Reset at gameover", @control_font, 0xffffffff)
-    draw_text(15, 660, "Up/Down/Left/Righ - Move Player", @control_font, 0xffffffff)
-    draw_text(15, 680, " - Shoot", @control_font, 0xffffffff)
-    draw_text(15, 700, "Spacebar - Use Help Request", @control_font, 0xffffffff)
-    draw_text(15, 720, "P - Activate Pry", @control_font, 0xffffffff)
+    draw_text(15, 640, "Enter - Reset at gameover", @control_font, 0xffffffff)
+    draw_text(15, 660, "Up/Down/Left/Right - Move Player", @control_font, 0xffffffff)
+    draw_text(15, 680, "Spacebar - Shoot", @control_font, 0xffffffff)
+   # draw_text(15, 700, "Spacebar - Use Help Request", @control_font, 0xffffffff)
+    #draw_text(15, 720, "P - Activate Pry", @control_font, 0xffffffff)
 
     # Credits
-    draw_text(850, 700, "Borrowed from Spencer Dixon ", @control_font, 0xffffffff )
-    draw_text(875, 720, "Updated by Peter Ko", @control_font, 0xffffffff )
+   # draw_text(850, 700, "Borrowed from Spencer Dixon ", @control_font, 0xffffffff )
+    #draw_text(875, 720, "Updated by Peter Ko", @control_font, 0xffffffff )
 
     # Highscore
    # draw_text(280, 565, "High Scores: rubywars.herokuapp.com ", @control_font, 0xffffffff )
